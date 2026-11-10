@@ -67,7 +67,9 @@ void differential_equations(double s, double e, double in, double r,
     double differential_susceptible, differential_exposed,
         differential_infected, differential_recovered;
 
-    for (int i = 0; i < t; i++) {
+    double dt = 0.1;
+
+    for (int i = 1; i <= t * 10; i++) {
 
         differential_susceptible = -(b * s * in)/N;
         //printf(" %lf", differential_susceptible);
@@ -81,13 +83,13 @@ void differential_equations(double s, double e, double in, double r,
         differential_recovered = g * in;
         //printf(" %lf", differential_recovered);
 
-        s += differential_susceptible;
-        e += differential_exposed;
-        in += differential_infected;
-        r += differential_recovered;
+        s += differential_susceptible * dt;
+        e += differential_exposed * dt;
+        in += differential_infected * dt;
+        r += differential_recovered * dt;
 
-        fprintf(file, "%d %.2f %.2f %.2f %.2f\n",
-                i, s, e, in, r);
+        fprintf(file, "%lf %.2f %.2f %.2f %.2f\n",
+                i * dt, s, e, in, r);
         //printf(" %lf\n", s + e + in + r);
     }
 
